@@ -4,6 +4,7 @@ var app = new Vue({
         product: 'Socks',
         image: './assets/vmSocks-green-onWhite.jpg',
         altText: 'Socks green',
-        link: 'https://google.com'
+        inventary: 100,
+        onSale: true
     }
 });
