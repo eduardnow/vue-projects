@@ -1,11 +1,11 @@
 Vue.component('product-details', {
-  props: {
-    details: {
-      type: Array,
-      required: true,
+    props: {
+        details: {
+            type: Array,
+            required: true,
+        },
     },
-  },
-  template: `
+    template: `
       <ul>
         <li v-for="detail in details">{{ detail }}</li>
       </ul>
@@ -13,13 +13,13 @@ Vue.component('product-details', {
 });
 
 Vue.component('product', {
-  props: {
-    premium: {
-      type: Boolean,
-      required: true,
+    props: {
+        premium: {
+            type: Boolean,
+            required: true,
+        },
     },
-  },
-  template: `
+    template: `
         <div class="product">
             <div class="product-image">
                 <img v-bind:src="image" v-bind:alt="altText" />
@@ -45,82 +45,84 @@ Vue.component('product', {
                 <button v-on:click="addToCart" :disabled="!inStock" :class="{ disabledButton: !inStock }">Add to
                     Cart</button>
                 <button v-on:click="removeFromCart">Remove from cart</button>
-
-                <div class="cart">
-                    <p>Cart({{ cart }})</p>
-                </div>
             </div>
         </div>
     `,
-  data() {
-    return {
-      product: 'Socks',
-      brand: 'Vue Mastery',
-      altText: 'Socks green',
-      selectedVariant: 0,
-      onSale: true,
-      details: ['80% cotton', '20% polyester', 'Gender-neutral'],
-      variants: [
-        {
-          id: 2234,
-          color: 'green',
-          image: './assets/vmSocks-green-onWhite.jpg',
-          quantity: 10,
+    data() {
+        return {
+            product: 'Socks',
+            brand: 'Vue Mastery',
+            altText: 'Socks green',
+            selectedVariant: 0,
+            onSale: true,
+            details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+            variants: [
+                {
+                    id: 2234,
+                    color: 'green',
+                    image: './assets/vmSocks-green-onWhite.jpg',
+                    quantity: 10,
+                },
+                {
+                    id: 2235,
+                    color: 'blue',
+                    image: './assets/vmSocks-blue-onWhite.jpg',
+                    quantity: 0,
+                },
+            ],
+            sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+        };
+    },
+    methods: {
+        addToCart() {
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].id);
         },
-        {
-          id: 2235,
-          color: 'blue',
-          image: './assets/vmSocks-blue-onWhite.jpg',
-          quantity: 0,
+        updateProduct(index) {
+            this.selectedVariant = index;
         },
-      ],
-      sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-      cart: 0,
-    };
-  },
-  methods: {
-    addToCart() {
-      this.cart += 1;
+        removeFromCart() {
+            this.$emit('remove-from-cart', this.variants[this.selectedVariant].id);
+        },
     },
-    updateProduct(index) {
-      this.selectedVariant = index;
-    },
-    removeFromCart() {
-      if (this.cart > 0) {
-        this.cart -= 1;
-      }
-    },
-  },
-  computed: {
-    title() {
-      return this.brand + ' ' + this.product;
-    },
-    image() {
-      return this.variants[this.selectedVariant].image;
-    },
-    inStock() {
-      return this.variants[this.selectedVariant].quantity;
-    },
-    sale() {
-      if (this.onSale) {
-        return this.brand + ' ' + this.product + ' are on sale!';
-      }
+    computed: {
+        title() {
+            return this.brand + ' ' + this.product;
+        },
+        image() {
+            return this.variants[this.selectedVariant].image;
+        },
+        inStock() {
+            return this.variants[this.selectedVariant].quantity;
+        },
+        sale() {
+            if (this.onSale) {
+                return this.brand + ' ' + this.product + ' are on sale!';
+            }
 
-      return this.brand + ' ' + this.product + ' are not on sale';
-    },
-    shipping() {
-      if (this.premium) {
-        return 'Free';
-      }
+            return this.brand + ' ' + this.product + ' are not on sale';
+        },
+        shipping() {
+            if (this.premium) {
+                return 'Free';
+            }
 
-      return 2.99;
+            return 2.99;
+        },
     },
-  },
 });
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    premium: true,
-  },
+    el: '#app',
+    data: {
+        premium: true,
+        cart: [],
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id);
+        },
+        removeItem(id) { 
+            this.cart = this.cart.filter(item => item !== id);
+        }
+    }
 });
