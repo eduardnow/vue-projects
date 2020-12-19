@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css">
+    <style>
+        body {
+            padding-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root" class="container">
+
+    <coupon></coupon>
+
+    <h2 class="subtitle" v-if="couponApplied">You used a coupon!</h2>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+<script src="main.js"></script>
+
+</body>
+</html>
