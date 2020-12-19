@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="root">
+
+    <progress-view inline-template>
+        <div>
+            <h1>Your progress through this course is {{ completionRate }}%</h1>
+
+            <div>
+                <button @click="completionRate += 10">Update Completion Rate</button>
+            </div>
+        </div>
+    </progress-view>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+<script src="main.js"></script>
+
+</body>
+</html>
